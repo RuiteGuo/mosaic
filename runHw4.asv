@@ -89,7 +89,7 @@ portrait_img = im2double(imread('portrait_small.png')); %imshow(portrait_img);
 
 % Estimate homography
 %manually selected the point using ginput from my personal script
-portrait_pts =[0.999999999999986,3;325,2;328,400;1.99999999999999,400]
+portrait_pts =[160,99.9999999999999;641,99.9999999999999;641,698.000000000000;161,698.000000000000];
  bg_pts = [101.000000000000,18.9999999999999;275,71.9999999999999;285,425.000000000000;86.0000000000000,438.000000000000];
 
 H_3x3 = computeHomography(portrait_pts, bg_pts);
@@ -102,7 +102,7 @@ dest_canvas_width_height = [size(bg_img, 2), size(bg_img, 1)];
 mask = ~mask;
 % Superimpose the image
 result = bg_img .* cat(3, mask, mask, mask) + dest_img;
-figure, imshow(result);
+%figure, imshow(result);
 imwrite(result, 'Van_Gogh_in_Osaka.png');
 
 %%  
@@ -120,8 +120,8 @@ before_img = showCorrespondence(imgs, imgd, xs, xd);
 imwrite(before_img, 'before_ransac.png');
 
 % Use RANSAC to reject outliers
-ransac_n = 10; % Max number of iteractions
-ransac_eps = 5; Acceptable alignment error 
+%ransac_n = ??; % Max number of iteractions
+%ransac_eps = ??; Acceptable alignment error 
 
 [inliers_id, H_3x3] = runRANSAC(xs, xd, ransac_n, ransac_eps);
 
@@ -143,7 +143,6 @@ imwrite(blended_result, 'blended_result.png');
 overlay_result = blendImagePair(fish, fish_mask, horse, horse_mask, 'overlay');
 %figure, imshow(overlay_result);
 imwrite(overlay_result, 'overlay_result.png');
-imshow('overlay_result.png');
 
 %%
 function challenge1e()
@@ -156,7 +155,7 @@ imgr = im2single(imread('mountain_right.png'));
 
 % You are free to change the order of input arguments
 stitched_img = stitchImg(imgc, imgl, imgr);
-figure, imshow(stitched_img);
+%figure, imshow(stitched_img);
 imwrite(stitched_img, 'mountain_panorama.png');
 
 %%

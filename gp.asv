@@ -1,6 +1,6 @@
 
 
-img1 = imread('portrait.png');
+[img1,map,a] = imread('portrait.png');
 img2 = imread('Osaka.png');
 [s,d] = ginputImage(img1,img2);
 H = computeHomography(s,d);
@@ -10,9 +10,17 @@ test = zeros(3,4);
 
 for i = 1:4
    test(:,i) = H * transpose([s(i,1), s(i,2),1]); 
-   test(1,i) = test()
+ test(1,i) = test(1,i) / test(3,i);
+  test(2,i) = test(2,i) / test(3,i);
     
 end
+
+imshow(img1);
+s = zeros(8,2);
+s = ginput(8);
+test2 = applyHomography(H,s);
+img3 = imread('portrait_transformed.png');
+showCorrespondence(img1,img3,)
 
 
 

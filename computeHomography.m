@@ -30,7 +30,7 @@ for k = 1:rows
     n = n+2;
 end
 
-linearSystem
+
 
 % solve through least square
 trans = transpose(linearSystem);

@@ -1,7 +1,8 @@
 
 
-img1 = imread('portrait.png');
+[img1,map,a] = imread('portrait_small.png');
 img2 = imread('Osaka.png');
+img3 = imread('portrait_transformed.png');
 [s,d] = ginputImage(img1,img2);
 H = computeHomography(s,d);
 
@@ -14,6 +15,13 @@ for i = 1:4
   test(2,i) = test(2,i) / test(3,i);
     
 end
+
+%imshow(img1);
+%s = zeros(8,2);
+%s = ginput(8);
+%test2 = applyHomography(H,s);
+
+%showCorrespondence(img1,img3,s,test2);
 
 
 
