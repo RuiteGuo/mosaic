@@ -50,8 +50,8 @@ orig_img = imread('portrait.png');
 warped_img = imread('portrait_transformed.png');
 
 % Choose 4 corresponding points (use ginput)
-%src_pts_nx2  = [xs1 ys1; xs2 ys2; xs3 ys3; xs4 ys4];
-%dest_pts_nx2 = [xd1 yd1; xd2 yd2; xd3 yd3; xd4 yd4];
+src_pts_nx2  = [159,101.000000000000;641,99.9999999999999;642,695.000000000000;161,698.000000000000]
+dest_pts_nx2 = [139,141.000000000000;621,28.9999999999999;660,773.000000000000;112.000000000000,593.000000000000];
 
 H_3x3 = computeHomography(src_pts_nx2, dest_pts_nx2);
 % src_pts_nx2 and dest_pts_nx2 are the coordinates of corresponding points 
@@ -68,7 +68,7 @@ H_3x3 = computeHomography(src_pts_nx2, dest_pts_nx2);
 % first column contains the x coordinates and the second column contains
 % the y coordinates.
 
-%test_pts_nx2 = [xt1 yt1; xt2 yt2; xt3 yt3; xt4 yt4];
+test_pts_nx2 = [405.000000000000,312.000000000000;368.000000000000,374.000000000000;499.000000000000,344.000000000000;389.000000000000,570.000000000000]
 
 % Apply homography
 dest_pts_nx2 = applyHomography(H_3x3, test_pts_nx2);
@@ -77,7 +77,6 @@ dest_pts_nx2 = applyHomography(H_3x3, test_pts_nx2);
 
 % Verify homography 
 result_img = showCorrespondence(orig_img, warped_img, test_pts_nx2, dest_pts_nx2);
-
 imwrite(result_img, 'homography_result.png');
 
 %%
@@ -121,7 +120,7 @@ imwrite(before_img, 'before_ransac.png');
 
 % Use RANSAC to reject outliers
 ransac_n = 10; % Max number of iteractions
-ransac_eps = 5; Acceptable alignment error 
+ransac_eps = 5;% Acceptable alignment error 
 
 [inliers_id, H_3x3] = runRANSAC(xs, xd, ransac_n, ransac_eps);
 
@@ -137,11 +136,11 @@ function challenge1d()
 [horse, horse_map, horse_mask] = imread('escher_horsemen.png');
 blended_result = blendImagePair(fish, fish_mask, horse, horse_mask,...
     'blend');
-%figure, imshow(blended_result);
+figure, imshow(blended_result);
 imwrite(blended_result, 'blended_result.png');
 
 overlay_result = blendImagePair(fish, fish_mask, horse, horse_mask, 'overlay');
-%figure, imshow(overlay_result);
+figure, imshow(overlay_result);
 imwrite(overlay_result, 'overlay_result.png');
 imshow('overlay_result.png');
 
@@ -161,4 +160,15 @@ imwrite(stitched_img, 'mountain_panorama.png');
 
 %%
 function challenge1f()
+%%
 % Your own panorama
+
+% stitch three images
+img1 = im2single(imread('library1.jpeg'));
+img2 = im2single(imread('library2.jpeg'));
+
+
+% You are free to change the order of input arguments
+stitched_img = stitchImg(img1, img2);
+figure, imshow(stitched_img);
+imwrite(stitched_img, 'library_para.png');

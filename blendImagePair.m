@@ -3,34 +3,20 @@ img1 = wrapped_imgs;
 mask1= masks;
 img2 = wrapped_imgd;
 mask2 = maskd;
-
-% mode is either 'overlay' or 'blend'
-
+mask1(mask1 > 0) = 1;
+mask2(mask2 > 0) = 1;
 if strcmp(mode,'overlay')
-    % copy img2 over img1 wherever mask2 applies
-    
-    result = img1;
-    for r=1:size(img1,1)
-        for c=1:size(img1,2)
-            if mask2(r,c) ~= 0
-                result(r,c,:) = img2(r,c,:);
-            end
-        end
-    end
-    out_img = result;
+   
+    w1 = cat(3, ~mask2, ~mask2, ~mask2);
+    out_img = im2double(img1) .*im2double(w1)  + im2double(img2);
     
 elseif strcmp(mode,'blend')
-    result = zeros(size(img2));
-
-    mask2=logical(mask2);
-    mask1=logical(mask1);
-    w2 = cat(3,mask2,mask2,mask2);
     w1 = cat(3,mask1,mask1,mask1);
+    w2 = cat(3,mask2,mask2,mask2);
     
-    a = w2 .* im2double(img2) + w1 .* im2double(img1);
-    a = a ./ (w1+w2);
-    out_img=a;
+    out_img = (w2 .* im2double(img2) + w1 .* im2double(img1))./ (w1+w2);
+
     
 else
-    disp('incorrect value for mode');
+    disp('wrong mode');
 end

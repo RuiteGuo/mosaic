@@ -1,29 +1,27 @@
-function [inliers_id, H] =  runRANSAC(Xs, Xd, ransac_n, eps)
+function [inliers_id, H] = runRANSAC(Xs, Xd, ransac_n, eps)
 
-[n, ~] = size(Xs);
-inliers_id = [];
 
-for iter = 1:ransac_n
-    
-    % compute the homography
-    permutations = randperm(n);
-    indices = permutations(1:ceil(n/5));
-    src_pts = Xs(indices, :);
-    dest_pts = Xd(indices, :);
-    new_H = computeHomography(src_pts, dest_pts);
-    
-    % compute the inliers
-    new_inliers = [];
-    Xt = applyHomography(new_H, Xs);
-    for k = 1:n
-        if norm(Xt(k,:)-Xd(k,:)) < eps
-            new_inliers = [new_inliers, k];
-        end
+H = zeros(3,3);
+inliers_id = 0;
+maxFit = 0;
+[n,~] = size(Xs)
+
+for i=1:ransac_n
+
+     permutations = randperm(n);    
+    indices = transpose(permutations(1:ransac_n/2));
+    src_pts = Xs (indices,:);
+    dest_pts = Xd (indices,:);
+    H_new = computeHomography(src_pts, dest_pts);
+    Xd_new = applyHomography(H_new,Xs);
+    dist = sqrt((Xd(:,1) - Xd_new(:,1)).^2 + (Xd(:,2) - Xd_new(:,2)).^2);
+    newInliers = find (dist < eps);
+    if length(newInliers) > maxFit
+        H = H_new;
+        inliers_id=newInliers;
+        maxFit = length(newInliers);
     end
     
-    % compare the results
-    if length(new_inliers) > length(inliers_id)
-        H = new_H;
-        inliers_id = new_inliers;
-    end
+    
+end
 end
