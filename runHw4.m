@@ -36,7 +36,7 @@ runTests(varargin, fun_handles);
 function honesty()
 % Type your full name and uni (both in string) to state your agreement 
 % to the Code of Academic Integrity.
-signAcademicHonestyPolicy('Peter Paker', 'pp1917');
+signAcademicHonestyPolicy('Ruite Guo', '9073576853');
 
 %--------------------------------------------------------------------------
 % Tests for Challenge 1: Panoramic Photo App
