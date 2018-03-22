@@ -13,7 +13,6 @@ if strcmp(mode,'overlay')
 elseif strcmp(mode,'blend')
     w1 = cat(3,mask1,mask1,mask1);
     w2 = cat(3,mask2,mask2,mask2);
-    
     out_img = (w2 .* im2double(img2) + w1 .* im2double(img1))./ (w1+w2);
 
     

@@ -161,14 +161,13 @@ imwrite(stitched_img, 'mountain_panorama.png');
 %%
 function challenge1f()
 %%
-% Your own panorama
-
 % stitch three images
-img1 = im2single(imread('library1.jpeg'));
-img2 = im2single(imread('library2.jpeg'));
+imgc = im2single(imread('trees_001.jpg'));
+imgl = im2single(imread('trees_000.jpg'));
+
 
 
 % You are free to change the order of input arguments
-stitched_img = stitchImg(img1, img2);
+stitched_img = stitchImg(imgc,imgl);
 figure, imshow(stitched_img);
-imwrite(stitched_img, 'library_para.png');
+imwrite(stitched_img, 'tree_para.png');
